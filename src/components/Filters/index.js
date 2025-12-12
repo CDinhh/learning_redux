@@ -1,7 +1,9 @@
 import { Col, Row, Input, Typography, Radio, Select, Tag } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import filterSlice from './filterSlice';
+import { setSearchFilter } from '../../Redux/actions';
+import { setStateFilter } from '../../Redux/actions';
+import { setPriorityFilter } from '../../Redux/actions';
 
 const { Search } = Input;
 
@@ -21,9 +23,9 @@ export default function Filters() {
         >
           Search
         </Typography.Paragraph>
-        <Search placeholder='input search text' value={searchText} onChange={e => {
+        <Search placeholder='input search text' onChange={e => {
           setSearchText(e.target.value);
-          dispatch(filterSlice.actions.setSearchFilter(e.target.value));
+          dispatch(setSearchFilter(e.target.value));
         }} />
       </Col>
       <Col sm={24}>
@@ -34,8 +36,7 @@ export default function Filters() {
         </Typography.Paragraph>
         <Radio.Group value={filterStatus} onChange={e => {
           setFilterStatus(e.target.value);
-          dispatch(filterSlice.actions.setStateFilter(e.target.value));
-
+          dispatch(setStateFilter(e.target.value));
         }}>
           <Radio value='All'>All</Radio>
           <Radio value='Completed'>Completed</Radio>
@@ -56,8 +57,7 @@ export default function Filters() {
           value={filterPriorities}
           onChange={values => {
             setFilterPriorities(values);
-            dispatch(filterSlice.actions.setPriorityFilter(values));
-
+            dispatch(setPriorityFilter(values));
           }}
         >
           <Select.Option value='High' label='High'>

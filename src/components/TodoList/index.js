@@ -1,11 +1,11 @@
 import { Col, Row, Input, Button, Select, Tag } from 'antd';
 import Todo from '../Todo';
 import { useDispatch } from 'react-redux';
+import { use } from 'react';
+import { addTodo } from '../../Redux/actions';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import todoSlice from './todoSlice'
-
 
 export default function TodoList() {
   const [todoName, setTodoName] = useState('');
@@ -26,12 +26,15 @@ export default function TodoList() {
     return matchesSearchText && matchesState() && (priorityFilter.length === 0 || priorityFilter.includes(todo.priority));
   });
   const handleAdd = () => {
-    dispatch(todoSlice.actions.addTodo({
-      id: uuidv4(),
-      name: todoName,
-      priority: priority,
-      completed: false,
-    }))
+    dispatch(
+      addTodo({
+        id: uuidv4(),
+        name: todoName,
+        priority: priority,
+        completed: false,
+      })
+    )
+
   }
   return (
     <Row style={{ height: 'calc(100% - 40px)' }}>
